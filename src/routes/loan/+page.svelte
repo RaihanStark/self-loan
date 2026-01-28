@@ -26,6 +26,7 @@
   let amount = 2_000_000;
   let selectedPlanId: PlanId = "30d";
   let payments: PaymentRow[] = [];
+  let showConfirm = false;
 
   $: selectedPlan = plans.find((p) => p.id === selectedPlanId) ?? plans[0];
   $: selectedInterestRate =
@@ -176,9 +177,43 @@
     <button
       type="button"
       class="mt-auto w-full rounded-full bg-sky-500 px-4 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-sky-400"
+      on:click={() => (showConfirm = true)}
     >
       Proceed
     </button>
   </div>
+
+  {#if showConfirm}
+    <div class="fixed inset-0 z-20 flex items-center justify-center bg-slate-900/60 px-4">
+      <div class="w-full max-w-sm rounded-2xl bg-white p-4 text-[11px] text-slate-900 shadow-xl">
+        <p class="text-[11px] font-medium uppercase tracking-[0.14em] text-slate-400">
+          Confirm loan
+        </p>
+        <p class="mt-2 text-sm font-semibold">
+          Create this self-loan?
+        </p>
+        <p class="mt-1 text-[11px] text-slate-500">
+          Amount {currency(amount)} with {payments.length} payment{payments.length === 1 ? "" : "s"}
+          as shown above.
+        </p>
+
+        <div class="mt-4 flex gap-2 text-[11px]">
+          <button
+            type="button"
+            class="flex-1 rounded-full border border-slate-200 px-3 py-2 font-medium text-slate-700 hover:bg-slate-50"
+            on:click={() => (showConfirm = false)}
+          >
+            Cancel
+          </button>
+          <a
+            href="/loan/success"
+            class="flex-1 rounded-full bg-sky-500 px-3 py-2 text-center font-semibold text-white shadow-sm hover:bg-sky-400"
+          >
+            Yes, proceed
+          </a>
+        </div>
+      </div>
+    </div>
+  {/if}
 </main>
 
