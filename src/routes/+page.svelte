@@ -116,7 +116,7 @@
           </p>
         </div>
         <a
-          href="/loan"
+          href="/loan/plan"
           class="rounded-full bg-sky-500 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-sky-400"
         >
           View plan
